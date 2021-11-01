@@ -1,4 +1,4 @@
-import { Header } from "../../components";
+import { Header, Footer } from "../../components";
 import { Container, Main, MainTitle, MainTitleLine } from "./Main.style";
 
 const MainPresenter = () => {
@@ -9,6 +9,7 @@ const MainPresenter = () => {
         <MainTitle>Stove Dev Camp Blog</MainTitle>
         <MainTitleLine />
       </Main>
+      <Footer />
     </Container>
   )
 }

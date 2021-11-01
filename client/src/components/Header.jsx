@@ -12,7 +12,7 @@ const HeaderNav = styled.header`
   padding: 0 2%;
 `;
 const NavButton = styled(Link)`
-  color: #1e1e1e;
+  color: #404040;
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;

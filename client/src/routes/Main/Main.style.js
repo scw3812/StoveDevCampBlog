@@ -10,6 +10,7 @@ export const Main = styled.main`
   flex-direction: column;
   align-items: center;
   width: 60%;
+  min-height: 80vh;
   margin-top: 100px;
 `;
 export const MainTitle = styled.p`
@@ -18,7 +19,7 @@ export const MainTitle = styled.p`
   margin-bottom: 10px;
 `;
 export const MainTitleLine = styled.div`
-  background-color: #1e1e1e;
+  background-color: #404040;
   width: 150px;
   height: 4px;
   border-radius: 10px;

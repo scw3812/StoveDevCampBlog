@@ -1,36 +1,31 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-const HeaderNav = styled.header`
-  position: absolute;
+const FooterContainer = styled.footer`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #eaeaea;
-  width: 96%;
-  height: 80px;
-  padding: 0 2%;
-`;
-const NavButton = styled(Link)`
-  color: #1e1e1e;
-  font-size: 25px;
-  font-weight: bold;
-  text-decoration: none;
-`;
-const Avatar = styled.img`
-  margin-top: 50px;
-  width: 100px;
+  width: 100%;
   height: 100px;
-  border-radius: 50px;
-  box-shadow: 1px 1px 5px gray;
+`;
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+`
+const InfoText = styled.span`
+  color: #777777;
 `
 
 export const Footer = () => {
   return (
-    <HeaderNav>
-      <NavButton to="/">Blog</NavButton>
-      <Avatar alt="profile" src="images/avatar.png" />
-      <NavButton to="/">Tags</NavButton>
-    </HeaderNav>
+    <FooterContainer>
+      <Info>
+        <InfoText>Chagnwoo Seo / 2021</InfoText>
+        <InfoText>Smilgate Stove Dev Camp</InfoText>
+      </Info>
+    </FooterContainer>
   )
 }
