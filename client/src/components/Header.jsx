@@ -12,15 +12,12 @@ const HeaderNav = styled.header`
   height: 80px;
   padding: 0 2%;
 `;
-const NavContainer = styled.nav`
-
-`
 const NavButton = styled(Link)`
   color: ${colors.textDefault};
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 5px;
 `;
 const Avatar = styled.img`
   margin-top: 50px;
@@ -35,11 +32,13 @@ export const Header = () => {
   return (
     <HeaderNav>
       <NavButton to="/">Blog Home</NavButton>
-      <Avatar alt="profile" src="images/avatar.png" />
-      <NavContainer>
-        <NavButton to="/">Post</NavButton>
-        <NavButton to="/">Tags</NavButton>
-      </NavContainer>
+      <Link to="/setting">
+        <Avatar alt="profile" src="images/avatar.png" />
+      </Link>
+      <nav>
+        <NavButton to="/editor">Post</NavButton>
+        <NavButton to="/tags">Tags</NavButton>
+      </nav>
     </HeaderNav>
   )
 }
