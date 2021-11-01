@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { colors } from "../styles";
 
 const HeaderNav = styled.header`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,11 +12,15 @@ const HeaderNav = styled.header`
   height: 80px;
   padding: 0 2%;
 `;
+const NavContainer = styled.nav`
+
+`
 const NavButton = styled(Link)`
   color: ${colors.textDefault};
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
+  margin: 0 10px;
 `;
 const Avatar = styled.img`
   margin-top: 50px;
@@ -30,9 +34,12 @@ const Avatar = styled.img`
 export const Header = () => {
   return (
     <HeaderNav>
-      <NavButton to="/">Blog</NavButton>
+      <NavButton to="/">Blog Home</NavButton>
       <Avatar alt="profile" src="images/avatar.png" />
-      <NavButton to="/">Tags</NavButton>
+      <NavContainer>
+        <NavButton to="/">Post</NavButton>
+        <NavButton to="/">Tags</NavButton>
+      </NavContainer>
     </HeaderNav>
   )
 }

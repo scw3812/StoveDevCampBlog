@@ -1,7 +1,7 @@
 import PostPresenter from "./PostPresenter"
 
-const Main = () => {
+const Post = () => {
   return <PostPresenter />
 }
 
-export default Main
+export default Post
