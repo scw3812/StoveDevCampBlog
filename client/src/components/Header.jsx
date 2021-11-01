@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { colors } from "../styles";
 
 const HeaderNav = styled.header`
   position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #eaeaea;
+  background-color: ${colors.backgroundGray};
   width: 96%;
   height: 80px;
   padding: 0 2%;
 `;
 const NavButton = styled(Link)`
-  color: #404040;
+  color: ${colors.textDefault};
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
@@ -23,6 +24,7 @@ const Avatar = styled.img`
   height: 100px;
   border-radius: 50px;
   box-shadow: 1px 1px 5px gray;
+  object-fit: cover;
 `
 
 export const Header = () => {

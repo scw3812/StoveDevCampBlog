@@ -1,14 +1,17 @@
-import { Header, Footer } from "../../components";
-import { Container, Main, MainTitle, MainTitleLine } from "./Main.style";
+import { Header, Footer, MainPost } from "../../components";
+import { Container, MainContent, MainTitle, MainTitleLine, MainPosts } from "./Main.style";
 
 const MainPresenter = () => {
   return (
     <Container>
       <Header />
-      <Main>
+      <MainContent>
         <MainTitle>Stove Dev Camp Blog</MainTitle>
         <MainTitleLine />
-      </Main>
+        <MainPosts>
+          {[0, 1, 2, 3].map(() => <MainPost />)}
+        </MainPosts>
+      </MainContent>
       <Footer />
     </Container>
   )
