@@ -12,6 +12,7 @@ const HeaderNav = styled.header`
   width: 96%;
   height: ${props => props.scrollPosition > 100 ? "50px" : "80px"};;
   padding: 0 2%;
+  z-index: 100;
 `;
 const NavContainer = styled.nav`
   display: flex;
@@ -41,6 +42,7 @@ export const Header = () => {
   }
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
+    return () => window.removeEventListener('scroll', updateScroll);
   }, []);
   return (
     <HeaderNav scrollPosition={scrollPosition}>
