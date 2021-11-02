@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { colors } from "../styles";
@@ -9,17 +10,22 @@ const HeaderNav = styled.header`
   align-items: center;
   background-color: ${colors.backgroundGray};
   width: 96%;
-  height: 80px;
+  height: ${props => props.scrollPosition > 100 ? "50px" : "80px"};;
   padding: 0 2%;
 `;
+const NavContainer = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  width: 10%;
+`
 const NavButton = styled(Link)`
   color: ${colors.textDefault};
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
-  margin: 0 5px;
 `;
 const Avatar = styled.img`
+  display: ${props => props.scrollPosition > 100 ? "none" : "block"};
   margin-top: 50px;
   width: 100px;
   height: 100px;
@@ -29,16 +35,25 @@ const Avatar = styled.img`
 `
 
 export const Header = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  }
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  }, []);
   return (
-    <HeaderNav>
-      <NavButton to="/">Blog Home</NavButton>
+    <HeaderNav scrollPosition={scrollPosition}>
+      <NavContainer>
+        <NavButton to="/">Blog Home</NavButton>
+      </NavContainer>
       <Link to="/setting">
-        <Avatar alt="profile" src="images/avatar.png" />
+        <Avatar alt="profile" src="images/avatar.png" scrollPosition={scrollPosition} />
       </Link>
-      <nav>
+      <NavContainer>
         <NavButton to="/editor">Post</NavButton>
         <NavButton to="/tags">Tags</NavButton>
-      </nav>
+      </NavContainer>
     </HeaderNav>
   )
 }
