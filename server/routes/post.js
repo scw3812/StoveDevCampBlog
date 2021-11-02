@@ -1,14 +1,13 @@
 const express = require("express");
-const { upload } = require("../utils/s3");
 const {
   postPost,
   getPosts,
   getPost,
   patchPost,
   deletePost,
-  postPostImgae,
-  deletePostImage,
+  postImage
 } = require("../controllers/post");
+const { upload } = require("../utils/s3");
 
 const router = express.Router();
 
@@ -19,12 +18,9 @@ router.get("/:userId/:page", getPosts);
 router
   .route("/:id")
   .get(getPost)
-  .patch(patchPost)
+  .patch(upload.array("postImage"), patchPost)
   .delete(deletePost);
 
-router
-  .route("/image")
-  .post(upload.array("postImage"), postPostImgae)
-  .delete(deletePostImage);
+router.post("/image", upload.single("postImage"), postImage);
 
 module.exports = router;

@@ -1,11 +1,17 @@
-const { deleteS3Images } = require("../utils/s3");
 const { Post, Tag } = require("../models");
 const { wrapAsync, makeError } = require("../utils");
+const { deleteS3Images } = require("../utils/s3");
 
-const IMAGE_BASE_URL = "cloud front 주소";
+const BASE_IMAGE_URL="https://stove-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
 
 const postPost = wrapAsync(async (req, res) => {
-  const { userId, tags, ...postDatas } = req.body;
+  const { userId, tags, deleteImages, ...postDatas } = req.body;
+
+  const deleteObjects = deleteImages.map((image) => {
+    const Key = image.substring(IMAGE_BASE_URL.length);
+    return { Key };
+  });
+  await deleteS3Images(deleteObjects);
 
   const post = await Post.create({
     user_id: userId,
@@ -26,7 +32,7 @@ const getPosts = wrapAsync(async (req, res) => {
     where: { user_id: req.params.userId },
     limit: 5,
     offset: (req.params.page - 1) * 5,
-    order: [["createdAt", "ASC"]],
+    order: [["createdAt", "DESC"]],
   });
 
   return res.status(201).json({ posts });
@@ -72,18 +78,23 @@ const patchPost = wrapAsync(async (req, res) => {
 });
 
 const deletePost = wrapAsync(async (req, res) => {
+  const id = req.params.id;
+  const post = await Post.findByPk(id);
+  if (!post) {
+    throw makeError("데이터가 존재하지 않습니다.", 400);
+  }
+  
   await Post.destroy(req.params.id);
 
-  return res.status(200).json({});
-});
-
-const postPostImgae = wrapAsync(async (req, res) => {
-  return res.status(200).json({});
-});
-
-const deletePostImage = wrapAsync(async (req, res) => {
-  const { deleteImages } = req.body;
-  const deleteObjects = deleteImages.map((image) => {
+  const el = document.createElement('html');
+  el.innerHTML =   post.content;
+  const imageEls = el.getElementsByTagName('img');
+  const images = 
+    Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
+  const deleteObjects = images.map((image) => {
+    if (!image.includes(IMAGE_BASE_URL)) {
+      return;
+    }
     const Key = image.substring(IMAGE_BASE_URL.length);
     return { Key };
   });
@@ -92,12 +103,13 @@ const deletePostImage = wrapAsync(async (req, res) => {
   return res.status(200).json({});
 });
 
+const postImage = (req, res) => res.status(200).json({ url: BASE_IMAGE_URL + req.file.key });
+
 module.exports = {
   postPost,
   getPosts,
   getPost,
   patchPost,
   deletePost,
-  postPostImgae,
-  deletePostImage,
+  postImage,
 };

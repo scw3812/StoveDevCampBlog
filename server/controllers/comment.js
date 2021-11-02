@@ -19,7 +19,7 @@ const getComments = wrapAsync(async (req, res) => {
         attributes: ["nickname", "profile"],
       },
     ],
-    order: [["createdAt", "ASC"]],
+    order: [["createdAt", "DESC"]],
   });
 
   return res.status(200).json({ comments });
