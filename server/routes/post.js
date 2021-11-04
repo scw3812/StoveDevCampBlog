@@ -18,7 +18,7 @@ router.get("/:userId/:page", getPosts);
 router
   .route("/:id")
   .get(getPost)
-  .patch(upload.array("postImage"), patchPost)
+  .patch(patchPost)
   .delete(deletePost);
 
 router.post("/image", upload.single("postImage"), postImage);

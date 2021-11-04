@@ -11,7 +11,7 @@ const postPost = wrapAsync(async (req, res) => {
 
   if (deleteImages.length) {
     const deleteObjects = deleteImages.map((image) => {
-      const Key = image.substring(IMAGE_BASE_URL.length);
+      const Key = image.substring(BASE_IMAGE_URL.length);
       return { Key };
     });
     await deleteS3Images(deleteObjects);
@@ -74,19 +74,31 @@ const getPost = wrapAsync(async (req, res) => {
 });
 
 const patchPost = wrapAsync(async (req, res) => {
-  const { tags, ...postDatas } = req.body;
-  const [success] = await Post.update(postDatas, {
-    where: { id: req.params.id },
-  });
-  if (!success) {
+  const { tags, deleteImages, ...postDatas } = req.body;
+  const id = req.params.id;
+
+  const post = await Post.findByPk(id);
+  if (!post) {
     throw makeError("데이터가 존재하지 않습니다.", 400);
   }
 
-  review.removeTags();
+  if (deleteImages.length) {
+    const deleteObjects = deleteImages.map((image) => {
+      const Key = image.substring(BASE_IMAGE_URL.length);
+      return { Key };
+    });
+    await deleteS3Images(deleteObjects);
+  }
+
+  await Post.update(postDatas, {
+    where: { id },
+  });
+
   const newTags = await Promise.all(
     tags.map((tag) => Tag.findOrCreate({ where: { name: tag } }))
   );
-  review.addTags(newTags);
+  const postTags = newTags.map((tag) => tag[0]);
+  post.setTags(postTags);
 
   return res.status(200).json({});
 });

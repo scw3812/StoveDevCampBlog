@@ -35,7 +35,7 @@ const Main = () => {
   const handleClickDelete = async (id) => {
     try {
       await postAPI.deletPost(id);
-      setPosts(posts => posts.filter(post => !post.id === id)); 
+      setPosts(posts => posts.filter(post => !post.id === id));
     } catch (err) {
       alert(err.response ? err.response.data : err);
     }

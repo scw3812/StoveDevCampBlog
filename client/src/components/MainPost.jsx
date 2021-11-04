@@ -25,6 +25,7 @@ const LimitedText = styled.p`
 const PostTitle = styled(LimitedText)`
   font-size: 30px;
   font-weight: bold;
+  margin-top: ${props => props.hasImage ? 0 : "50px"};
 `;
 const PostDescription = styled(LimitedText)`
   font-size: 25px;
@@ -63,16 +64,16 @@ const regex = /(<([^>]+)>)/ig;
 
 export const MainPost = ({ post, onClick }) => {
   return (
-    <PostContainer to={{ pathname: `/post`, state: post }}>
-      <PostLinkContainer>
+    <PostContainer>
+      <PostLinkContainer to={{ pathname: `/post`, state: post }}>
         {post.thumbnail ? <PostImage alt="post" src={post.thumbnail} /> : null}
-        <PostTitle>{post.title}</PostTitle>
+        <PostTitle hasImage={post.thumbnail}>{post.title}</PostTitle>
         <PostDescription lineNumber={2}>{post.description}</PostDescription>
         <PostDate>{post.createdAt.substring(0, 10)}</PostDate>
         <PostContent lineNumber={4}>{post.content.replace(regex, '')}</PostContent>
       </PostLinkContainer>
       <PostTagsContainer>
-        <PostTags>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
+        <PostTags>Tags: {post.tags.map(tag => tag.name + "  ")}</PostTags>
         <PostDelete onClick={() => onClick(post.id)}>삭제</PostDelete>
       </PostTagsContainer>
       <PostLine />

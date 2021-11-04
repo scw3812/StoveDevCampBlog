@@ -16,10 +16,10 @@ const Editor = ({ location, history }) => {
       const { title, description, content, tags } = location.state;
       setTitle(title);
       setDescription(description);
-      setContent(content);
-      setTags(tags);
+      editorRef.current.getInstance().setHTML(content);
+      setTags(tags.map(tag => tag.name));
     }
-  }, []);
+  }, [location.state]);
 
   const handleTitleChange = (title) => setTitle(title);
   const handleDescriptionChange = (description) => setDescription(description);
@@ -65,7 +65,11 @@ const Editor = ({ location, history }) => {
       const images = 
         Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
       const newDeleteImages = deleteImages.filter(image => !images.includes(image));
-      await postAPI.postPost({ userId: 1, title, description, content, thumbnail: images[0], tags, deleteImages: newDeleteImages });
+      if (location.state) {
+        await postAPI.patchPost(location.state.id, { title, description, content, thumbnail: images[0], tags, deleteImages: newDeleteImages });
+      } else {
+        await postAPI.postPost({ userId: 1, title, description, content, thumbnail: images[0], tags, deleteImages: newDeleteImages });
+      }
       history.push("/");
     } catch (err) {
       alert(err.response ? err.response.data : err);
@@ -73,6 +77,8 @@ const Editor = ({ location, history }) => {
   }
 
   return <EditorPresenter
+            title={title}
+            description={description}
             tag={tag}
             tags={tags}
             editorRef={editorRef}

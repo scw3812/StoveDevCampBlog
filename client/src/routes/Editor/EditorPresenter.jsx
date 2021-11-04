@@ -13,6 +13,8 @@ import {
 } from './Editor.style';
 
 const EditorPresenter = ({
+  title,
+  description,
   tag,
   tags,
   editorRef,
@@ -29,9 +31,9 @@ const EditorPresenter = ({
     <Container>
       <Header />
       <EditorMain>
-        <TitleInput placeholder="Input Post Title" onChange={({ target }) => onTitleChange(target.value)} />
-        <DescriptionInput placeholder="Input Post Description" onChange={({ target }) => onDescriptionChange(target.value)} />
-        <Editor 
+        <TitleInput value={title} placeholder="Input Post Title" onChange={({ target }) => onTitleChange(target.value)} />
+        <DescriptionInput value={description} placeholder="Input Post Description" onChange={({ target }) => onDescriptionChange(target.value)} />
+        <Editor
           hideModeSwitch height="70vh" 
           initialEditType="wysiwyg" 
           ref={editorRef} 
