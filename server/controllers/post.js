@@ -32,6 +32,16 @@ const postPost = wrapAsync(async (req, res) => {
 const getPosts = wrapAsync(async (req, res) => {
   const posts = await Post.findAll({
     where: { user_id: req.params.userId },
+    include: [
+      {
+        model: Tag,
+        as: "tags",
+        attributes: ["name"],
+        through: {
+          attributes: []
+        }
+      }
+    ],
     limit: 5,
     offset: (req.params.page - 1) * 5,
     order: [["createdAt", "DESC"]],
