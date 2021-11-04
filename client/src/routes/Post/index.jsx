@@ -21,6 +21,9 @@ const Post = ({ location }) => {
   const handelContent = (content) => setContent(content);
   const handleClickSubmit = async () => {
     try {
+      if (content === "") {
+        throw new Error("댓글을 입력해주세요");
+      }
       const { data } = await commentAPI.postComment({ userId: 1, postId: location.state.id, content });
       setContent("");
       const { comment, user } = data;

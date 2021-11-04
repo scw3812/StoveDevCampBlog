@@ -14,6 +14,9 @@ const Setting = ({ location: { state } }) => {
   const handleChangeNickname = (nickname) => setNickname(nickname);
   const handleClickSubmit = async () => {
     try {
+      if (nickname === "") {
+        throw new Error("닉네임을 입력해주세요");
+      }
       const formData = new FormData();
       formData.append("userProfile", profileFile);
       formData.append("nickname", nickname);
