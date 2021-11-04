@@ -20,7 +20,7 @@
 
 화면|포스트 수정|태그 페이지
 -|-|-
-스크린샷|<img width="500" alt="포스트수정" src="https://user-images.githubusercontent.com/49465188/140382573-9be9c36d-911d-4cc9-802c-794e63ab0074.png"><br> - 포스트 페이지에서 편집 아이콘을 눌러 수정 페이지로 이동할 경우 기존 글의 내용이 모두 그대로 들어가게 됨 |<img width="500" alt="태그페이지" src="https://user-images.githubusercontent.com/49465188/140382858-1058f365-8371-40b6-b253-caef82a3e503.png"> - 태그 페이지에서는 태그별로 글 목록을 확인 
+스크린샷|<img width="500" alt="포스트수정" src="https://user-images.githubusercontent.com/49465188/140382573-9be9c36d-911d-4cc9-802c-794e63ab0074.png"><br> - 포스트 페이지에서 편집 아이콘을 눌러 수정 페이지로 이동할 경우 기존 글의 내용이 모두 그대로 들어가게 됨 |<img width="500" alt="태그페이지" src="https://user-images.githubusercontent.com/49465188/140386053-cd039087-b7f5-4940-b420-5e206b04f794.png"> - 태그 페이지에서는 태그별로 글 목록을 확인 
 
 화면|프로필 설정|프로필 수정
 -|-|-
