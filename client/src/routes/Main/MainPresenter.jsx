@@ -4,7 +4,7 @@ import { Container, MainContent, MainTitle, MainTitleLine, MainPosts } from "./M
 const MainPresenter = ({ nickname, profile, posts }) => {
   return (
     <Container>
-      <Header profile={profile}/>
+      <Header isMain profile={profile}/>
       <MainContent>
         <MainTitle>{nickname}'s Blog</MainTitle>
         <MainTitleLine />

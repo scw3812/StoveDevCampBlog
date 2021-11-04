@@ -11,7 +11,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <Route path="/" exact component={ Main }/>
-      <Route path="/post/:id" component={ Post } />
+      <Route path="/post" component={ Post } />
       <Route path="/editor" component={ Editor } />
       <Route path="/tags" component={ Tags } />
       <Route path="/setting" component={ Setting } />

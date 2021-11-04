@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { colors } from "../styles";
-import parse from 'html-react-parser';
 
 const PostContainer = styled(Link)`
   width: 100%;
@@ -34,12 +33,8 @@ const PostDate = styled.p`
   font-style: italic;
   margin-top: 5px;
 `
-const PostContent = styled.div`
+const PostContent = styled(LimitedText)`
   font-size: 15px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
 `
 const PostTags = styled(LimitedText)`
   font-size: 15px;
@@ -53,15 +48,17 @@ const PostLine = styled.div`
   opacity: 0.2;
 `;
 
+const regex = /(<([^>]+)>)/ig;
+
 export const MainPost = ({ post }) => {
   return (
-    <PostContainer to={`/post/${post.id}`}>
+    <PostContainer to={{ pathname: `/post`,  state: post }}>
       {post.thumbnail ? <PostImage alt="post" src={post.thumbnail} /> : null}
-      <PostTitle lineNumber={1}>{post.title}</PostTitle>
+      <PostTitle>{post.title}</PostTitle>
       <PostDescription lineNumber={2}>{post.description}</PostDescription>
       <PostDate>{post.createdAt.substring(0, 10)}</PostDate>
-      <PostContent>{parse(post.content)}</PostContent>
-      <PostTags lineNumber={1}>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
+      <PostContent lineNumber={4}>{post.content.replace(regex, '')}</PostContent>
+      <PostTags>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
       <PostLine />
     </PostContainer>
   )

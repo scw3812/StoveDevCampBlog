@@ -9,6 +9,7 @@ const Editor = () => {
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const [deleteImages, setDeleteImages] = useState([]);
+  const [thumbnail, setThumbnail] = useState("");
   const editorRef = useRef();
 
   const handleTitleChange = (title) => setTitle(title);
@@ -21,6 +22,9 @@ const Editor = () => {
       formData.append('postImage', blob);
       const { data } = await postAPI.postImage(formData);
       const url = data.url;
+      if (thumbnail === "") {
+        setThumbnail(url);
+      }
       setDeleteImages(prev => [...prev, url]);
       callback(url, alt);
     } catch (err) {
@@ -55,7 +59,7 @@ const Editor = () => {
       const images = 
         Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
       const newDeleteImages = deleteImages.filter(image => !images.includes(image));
-      await postAPI.postPost({ userId: 1, title, description, content, tags, deleteImages: newDeleteImages });
+      await postAPI.postPost({ userId: 1, title, description, content, thumbnail, tags, deleteImages: newDeleteImages });
     } catch (err) {
       alert(err.response ? err.response.data : err);
     }

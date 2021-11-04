@@ -35,7 +35,7 @@ const Avatar = styled.img`
   object-fit: cover;
 `
 
-export const Header = ({ profile }) => {
+export const Header = ({ isMain, profile }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -49,9 +49,10 @@ export const Header = ({ profile }) => {
       <NavContainer>
         <NavButton to="/">Blog Home</NavButton>
       </NavContainer>
-      <Link to="/setting">
-        <Avatar alt="profile" src={profile ?? "images/avatar.png"} scrollPosition={scrollPosition} />
-      </Link>
+      {isMain ? 
+        <Link to="/setting">
+          <Avatar alt="profile" src={profile ?? "images/avatar.png"} scrollPosition={scrollPosition} />
+        </Link> : null}
       <NavContainer>
         <NavButton to="/editor">Post</NavButton>
         <NavButton to="/tags">Tags</NavButton>
