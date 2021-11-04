@@ -7,11 +7,13 @@ const BASE_IMAGE_URL="https://stove-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
 const postPost = wrapAsync(async (req, res) => {
   const { userId, tags, deleteImages, ...postDatas } = req.body;
 
-  const deleteObjects = deleteImages.map((image) => {
-    const Key = image.substring(IMAGE_BASE_URL.length);
-    return { Key };
-  });
-  await deleteS3Images(deleteObjects);
+  if (deleteImages.length) {
+    const deleteObjects = deleteImages.map((image) => {
+      const Key = image.substring(IMAGE_BASE_URL.length);
+      return { Key };
+    });
+    await deleteS3Images(deleteObjects);
+  }
 
   const post = await Post.create({
     user_id: userId,
