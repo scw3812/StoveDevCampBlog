@@ -5,7 +5,7 @@ const API = axios.create({
   timeout: 3000
 });
 
-const POST_BASE_URL = "/users";
+const USER_BASE_URL = "/users";
 export const userAPI = {
-  getUserInfo: async (userId) => await API.get(`${POST_BASE_URL}/${userId}`),
+  getUserInfo: async (userId) => await API.get(`${USER_BASE_URL}/${userId}`),
 }

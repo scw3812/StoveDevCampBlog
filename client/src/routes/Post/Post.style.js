@@ -60,3 +60,51 @@ export const PostTags = styled.p`
   font-size: 20px;
   font-weight: bold;
 `
+export const CommentInputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 50px;
+`
+export const CommentInput = styled.textarea`
+  width: 88%;
+  padding: 1%;
+  height: 25px;
+  border-radius: 10px;
+  border: solid 2px ${colors.backgroundGray};
+  font-size: 20px;
+  &:focus {
+    outline: none;
+  }
+`;
+export const CommentButton = styled.button`
+  width: 9%;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: solid 1px ${colors.textGray};
+  color: ${colors.textGray};
+  background-color: ${colors.backgroundGray};
+  cursor: pointer;
+  &:active {
+    background-color: #e1e1e1;
+  }
+`;
+export const CommentContainer = styled.div`
+  display: flex;
+  width: 96%;
+  padding: 2%;
+`
+export const CommentContent = styled.p`
+  font-size: 20px;
+  margin-left: 10px;
+`
+export const CommentNickname = styled.p`
+  font-size: 18px;
+`
+export const CommentProfile = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 25px;
+`

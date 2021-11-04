@@ -1,4 +1,6 @@
-const { Comment } = require("../models");
+
+const { col } = require("sequelize");
+const { Comment, User } = require("../models");
 const { wrapAsync } = require("../utils");
 
 const getComments = wrapAsync(async (req, res) => {
@@ -27,13 +29,16 @@ const getComments = wrapAsync(async (req, res) => {
 
 const postComment = wrapAsync(async (req, res) => {
   const { userId, postId, content } = req.body;
-  await Comment.create({
+  const comment = await Comment.create({
     user_id: userId,
     post_id: postId,
     content,
   });
+  const user = await User.findByPk(comment.user_id, {
+    attributes: ["nickname", "profile"]
+  });
 
-  return res.status(201).json({});
+  return res.status(201).json({ comment, user });
 });
 
 module.exports = { getComments, postComment };
