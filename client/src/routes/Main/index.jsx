@@ -7,6 +7,7 @@ const Main = () => {
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
 
   const getUserInfo = async () => {
     try {
@@ -26,6 +27,7 @@ const Main = () => {
       try {
         const { data } = await postAPI.getPosts(1, page);
         setPosts(data.posts);
+        setLastPage(data.pages);
       } catch (err) {
         alert(err.response ? err.response.data.error : err.message);
       }
@@ -51,6 +53,7 @@ const Main = () => {
       profile={profile}
       posts={posts}
       page={page}
+      lastPage={lastPage}
       onClickDelete={handleClickDelete}
       onClickNext={handleClickNext}
       onClickPrev={handleClickPrev}

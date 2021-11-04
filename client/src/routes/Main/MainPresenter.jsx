@@ -1,7 +1,7 @@
 import { Header, Footer, MainPost } from "../../components";
 import { Container, MainContent, MainTitle, MainTitleLine, MainPosts, MainPrevButton, MainButtonContainer, MainNextButton } from "./Main.style";
 
-const MainPresenter = ({ nickname, profile, posts, page, onClickDelete, onClickNext, onClickPrev }) => {
+const MainPresenter = ({ nickname, profile, posts, page, lastPage, onClickDelete, onClickNext, onClickPrev }) => {
   return (
     <Container>
       <Header isMain profile={profile}/>
@@ -13,7 +13,7 @@ const MainPresenter = ({ nickname, profile, posts, page, onClickDelete, onClickN
         </MainPosts>
         <MainButtonContainer>
           {page > 1 ? <MainNextButton onClick={onClickNext}>👈 Next Posts</MainNextButton>: <div />}
-          <MainPrevButton onClick={onClickPrev}>Prev Posts 👉</MainPrevButton>
+          {page < lastPage ? <MainPrevButton onClick={onClickPrev}>Prev Posts 👉</MainPrevButton> : <div />}
         </MainButtonContainer>
       </MainContent>
       <Footer />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import PostPresenter from "./PostPresenter"
 import { commentAPI } from "../../api"
 
@@ -6,17 +6,17 @@ const Post = ({ location }) => {
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
 
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
     try {
       const { data } = await commentAPI.getComments(location.state.id);
       setComments(data.comments);
     } catch (err) {
       alert(err.response ? err.response.data.error : err.message);
     }
-  }
+  }, [location.state.id]);
   useEffect(() => {
     getComments();
-  }, []);
+  }, [getComments]);
 
   const handelContent = (content) => setContent(content);
   const handleClickSubmit = async () => {

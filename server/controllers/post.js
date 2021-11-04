@@ -32,8 +32,9 @@ const postPost = wrapAsync(async (req, res) => {
 });
 
 const getPosts = wrapAsync(async (req, res) => {
+  const user_id = req.params.userId;
   const posts = await Post.findAll({
-    where: { user_id: req.params.userId },
+    where: { user_id },
     include: [
       {
         model: Tag,
@@ -49,28 +50,10 @@ const getPosts = wrapAsync(async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  return res.status(200).json({ posts });
-});
+  const postsCount = await Post.count({ where: { user_id } });
+  const pages = Math.ceil(postsCount / 5);
 
-const getPost = wrapAsync(async (req, res) => {
-  const post = await Post.findByPk(req.params.id, {
-    attributes: ["title", "description", "content", "createdAt"],
-    include: [
-      {
-        model: Tag,
-        as: "tags",
-        attributes: [["name", "tag"]],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-  });
-  if (!post) {
-    throw makeError("데이터가 존재하지 않습니다.", 400);
-  }
-
-  return res.status(200).json({ post });
+  return res.status(200).json({ posts, pages });
 });
 
 const patchPost = wrapAsync(async (req, res) => {
@@ -133,11 +116,34 @@ const deletePost = wrapAsync(async (req, res) => {
 const postImage = (req, res) =>
   res.status(200).json({ url: BASE_IMAGE_URL + req.file.key });
 
+const getPostsTags = wrapAsync(async (req, res) => {
+  const posts = await Post.findAll({
+    where: { user_id: req.params.userId },
+    attributes: ["id", "title", "description", "createdAt"],
+    include: [
+      {
+        model: Tag,
+        as: "tags",
+        attributes: ["id", "name"]
+      }
+    ],
+  });
+  const tags = posts.reduce((prev, post) => [...prev, ...post.tags.map((tag) => tag.name)], []);
+  const newTags = Array.from(new Set(tags));
+  const tagPosts = {};
+  newTags.forEach((tag) => tagPosts[tag] = []);
+  posts.forEach((post) => {
+    post.tags.forEach((tag) => tagPosts[tag.name].push(post));
+  });
+
+  return res.status(200).json({ tagPosts });
+});
+
 module.exports = {
   postPost,
   getPosts,
-  getPost,
   patchPost,
   deletePost,
   postImage,
+  getPostsTags,
 };

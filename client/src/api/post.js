@@ -18,4 +18,5 @@ export const postAPI = {
   getPosts: async (userId, page) => await API.get(`${POST_BASE_URL}/${userId}/${page}`),
   deletPost: async (postId) => await API.delete(`${POST_BASE_URL}/${postId}`),
   patchPost: async (postId, body) => await API.patch(`${POST_BASE_URL}/${postId}`, body),
+  getPostsTags: async (userId) => await API.get(`${POST_BASE_URL}/tags/users/${userId}`),
 }
