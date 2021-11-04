@@ -35,14 +35,14 @@ const Avatar = styled.img`
   object-fit: cover;
 `
 
-export const Header = () => {
+export const Header = ({ profile }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   }
   useEffect(() => {
-    window.addEventListener('scroll', updateScroll);
-    return () => window.removeEventListener('scroll', updateScroll);
+    window.addEventListener("scroll", updateScroll);
+    return () => window.removeEventListener("scroll", updateScroll);
   }, []);
   return (
     <HeaderNav scrollPosition={scrollPosition}>
@@ -50,7 +50,7 @@ export const Header = () => {
         <NavButton to="/">Blog Home</NavButton>
       </NavContainer>
       <Link to="/setting">
-        <Avatar alt="profile" src="images/avatar.png" scrollPosition={scrollPosition} />
+        <Avatar alt="profile" src={profile ?? "images/avatar.png"} scrollPosition={scrollPosition} />
       </Link>
       <NavContainer>
         <NavButton to="/editor">Post</NavButton>

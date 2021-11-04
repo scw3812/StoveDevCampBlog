@@ -1,15 +1,15 @@
 import { Header, Footer, MainPost } from "../../components";
 import { Container, MainContent, MainTitle, MainTitleLine, MainPosts } from "./Main.style";
 
-const MainPresenter = () => {
+const MainPresenter = ({ nickname, profile, posts }) => {
   return (
     <Container>
-      <Header />
+      <Header profile={profile}/>
       <MainContent>
-        <MainTitle>Stove Dev Camp Blog</MainTitle>
+        <MainTitle>{nickname}'s Blog</MainTitle>
         <MainTitleLine />
         <MainPosts>
-          {[0, 1, 2, 3].map(() => <MainPost />)}
+          {posts.map((post) => <MainPost key={post.id} post={post} />)}
         </MainPosts>
       </MainContent>
       <Footer />

@@ -55,7 +55,7 @@ const Editor = () => {
       const images = 
         Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
       const newDeleteImages = deleteImages.filter(image => !images.includes(image));
-      await postAPI.postPost({ title, description, content, tags, deleteImages: newDeleteImages });
+      await postAPI.postPost({ userId: 1, title, description, content, tags, deleteImages: newDeleteImages });
     } catch (err) {
       alert(err.response ? err.response.data : err);
     }
