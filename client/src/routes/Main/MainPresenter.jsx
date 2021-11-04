@@ -1,7 +1,7 @@
 import { Header, Footer, MainPost } from "../../components";
 import { Container, MainContent, MainTitle, MainTitleLine, MainPosts } from "./Main.style";
 
-const MainPresenter = ({ nickname, profile, posts }) => {
+const MainPresenter = ({ nickname, profile, posts, onClick }) => {
   return (
     <Container>
       <Header isMain profile={profile}/>
@@ -9,7 +9,7 @@ const MainPresenter = ({ nickname, profile, posts }) => {
         <MainTitle>{nickname}'s Blog</MainTitle>
         <MainTitleLine />
         <MainPosts>
-          {posts.map((post) => <MainPost key={post.id} post={post} />)}
+          {posts.map((post) => <MainPost key={post.id} post={post} onClick={onClick} />)}
         </MainPosts>
       </MainContent>
       <Footer />

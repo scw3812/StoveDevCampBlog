@@ -27,6 +27,7 @@ export const MainTitleLine = styled.div`
   width: 150px;
   height: 4px;
   border-radius: 10px;
+  margin-bottom: 20px;
 `;
 export const MainPosts = styled.section`
   width: 100%;

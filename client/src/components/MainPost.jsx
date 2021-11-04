@@ -2,7 +2,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { colors } from "../styles";
 
-const PostContainer = styled(Link)`
+const PostContainer = styled.div`
+  width: 100%;
+`;
+const PostLinkContainer = styled(Link)`
   width: 100%;
   text-decoration: none;
   color: ${colors.textDefault};
@@ -22,7 +25,6 @@ const LimitedText = styled.p`
 const PostTitle = styled(LimitedText)`
   font-size: 30px;
   font-weight: bold;
-  margin-top: 20px;
 `;
 const PostDescription = styled(LimitedText)`
   font-size: 25px;
@@ -36,9 +38,18 @@ const PostDate = styled.p`
 const PostContent = styled(LimitedText)`
   font-size: 15px;
 `
+const PostTagsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
 const PostTags = styled(LimitedText)`
   font-size: 15px;
-  margin-top: 10px;
+`
+const PostDelete = styled.span`
+  font-size: 15px;
+  color: red;
+  cursor: pointer;
 `
 const PostLine = styled.div`
   background-color: ${colors.textGray};
@@ -50,15 +61,20 @@ const PostLine = styled.div`
 
 const regex = /(<([^>]+)>)/ig;
 
-export const MainPost = ({ post }) => {
+export const MainPost = ({ post, onClick }) => {
   return (
-    <PostContainer to={{ pathname: `/post`,  state: post }}>
-      {post.thumbnail ? <PostImage alt="post" src={post.thumbnail} /> : null}
-      <PostTitle>{post.title}</PostTitle>
-      <PostDescription lineNumber={2}>{post.description}</PostDescription>
-      <PostDate>{post.createdAt.substring(0, 10)}</PostDate>
-      <PostContent lineNumber={4}>{post.content.replace(regex, '')}</PostContent>
-      <PostTags>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
+    <PostContainer to={{ pathname: `/post`, state: post }}>
+      <PostLinkContainer>
+        {post.thumbnail ? <PostImage alt="post" src={post.thumbnail} /> : null}
+        <PostTitle>{post.title}</PostTitle>
+        <PostDescription lineNumber={2}>{post.description}</PostDescription>
+        <PostDate>{post.createdAt.substring(0, 10)}</PostDate>
+        <PostContent lineNumber={4}>{post.content.replace(regex, '')}</PostContent>
+      </PostLinkContainer>
+      <PostTagsContainer>
+        <PostTags>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
+        <PostDelete onClick={() => onClick(post.id)}>삭제</PostDelete>
+      </PostTagsContainer>
       <PostLine />
     </PostContainer>
   )

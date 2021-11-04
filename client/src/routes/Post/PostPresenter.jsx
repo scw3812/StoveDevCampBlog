@@ -5,17 +5,24 @@ import {
   PostTitle, 
   PostDate, 
   PostContent, 
-  PostTags 
+  PostTags, 
+  PostTitleContainer,
+  PostEdit,
+  EditImg
 } from "./Post.style"
 import { Header } from "../../components";
 import parser from "html-react-parser";
+import edit from "../../assets/img/edit.svg";
 
 const PostPresenter = ({ post }) => {
   return (
     <Container>
       <Header />
       <PostMain>
-        <PostTitle>{post.title}</PostTitle>
+        <PostTitleContainer>
+          <PostTitle>{post.title}</PostTitle>
+          <PostEdit to={{ pathname: "/editor", state: post }}><EditImg alt="edit" src={edit}/></PostEdit> 
+        </PostTitleContainer>
         <PostDescription>{post.description}</PostDescription>
         <PostDate>{post.createdAt.substring(0, 10)}</PostDate>
         <PostContent>{parser(post.content)}</PostContent>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { colors } from "../styles";
+import avatar from "../assets/img/avatar.png";
 
 const HeaderNav = styled.header`
   position: fixed;
@@ -51,7 +52,7 @@ export const Header = ({ isMain, profile }) => {
       </NavContainer>
       {isMain ? 
         <Link to="/setting">
-          <Avatar alt="profile" src={profile ?? "images/avatar.png"} scrollPosition={scrollPosition} />
+          <Avatar alt="profile" src={profile ?? avatar} scrollPosition={scrollPosition} />
         </Link> : null}
       <NavContainer>
         <NavButton to="/editor">Post</NavButton>

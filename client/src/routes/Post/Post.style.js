@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../styles";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   position: relative;
@@ -15,11 +16,28 @@ export const PostMain = styled.main`
   margin-top: 120px;
   margin-bottom: 100px;
 `;
+export const PostTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+`
 export const PostTitle = styled.p`
   font-weight: bold;
   font-size: 40px;
-  margin-bottom: 30px;
 `;
+export const PostEdit = styled(Link)`
+  width: 30px;
+  height: 30px;
+  & :active {
+    width: 25px;
+    height: 25px;
+  }
+`
+export const EditImg = styled.img`
+  width: 100%;
+  height: 100%;
+`
 export const PostDescription = styled.p`
   font-size: 30px;
   margin-bottom: 10px;

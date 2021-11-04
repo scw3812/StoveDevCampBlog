@@ -1,16 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import EditorPresenter from "./EditorPresenter";
 import { postAPI } from "../../api";
 
-const Editor = () => {
+const Editor = ({ location, history }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const [deleteImages, setDeleteImages] = useState([]);
-  const [thumbnail, setThumbnail] = useState("");
   const editorRef = useRef();
+
+  useEffect(() => {
+    if (location.state) {
+      const { title, description, content, tags } = location.state;
+      setTitle(title);
+      setDescription(description);
+      setContent(content);
+      setTags(tags);
+    }
+  }, []);
 
   const handleTitleChange = (title) => setTitle(title);
   const handleDescriptionChange = (description) => setDescription(description);
@@ -22,13 +31,10 @@ const Editor = () => {
       formData.append('postImage', blob);
       const { data } = await postAPI.postImage(formData);
       const url = data.url;
-      if (thumbnail === "") {
-        setThumbnail(url);
-      }
       setDeleteImages(prev => [...prev, url]);
       callback(url, alt);
     } catch (err) {
-      alert(err);
+      alert(err.response ? err.response.data : err);
     }
   }
   const handleTagChange = (tag) => setTag(tag);
@@ -59,7 +65,8 @@ const Editor = () => {
       const images = 
         Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
       const newDeleteImages = deleteImages.filter(image => !images.includes(image));
-      await postAPI.postPost({ userId: 1, title, description, content, thumbnail, tags, deleteImages: newDeleteImages });
+      await postAPI.postPost({ userId: 1, title, description, content, thumbnail: images[0], tags, deleteImages: newDeleteImages });
+      history.push("/");
     } catch (err) {
       alert(err.response ? err.response.data : err);
     }
