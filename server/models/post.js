@@ -19,7 +19,7 @@ module.exports = class Post extends Sequelize.Model {
         unique: false,
       },
       thumbnail: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(500),
         allowNull: true,
         unique: true,
       },

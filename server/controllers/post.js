@@ -1,8 +1,10 @@
 const { Post, Tag } = require("../models");
 const { wrapAsync, makeError } = require("../utils");
 const { deleteS3Images } = require("../utils/s3");
+const { parse } = require("node-html-parser");
 
-const BASE_IMAGE_URL="https://stove-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
+const BASE_IMAGE_URL =
+  "https://stove-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
 
 const postPost = wrapAsync(async (req, res) => {
   const { userId, tags, deleteImages, ...postDatas } = req.body;
@@ -38,9 +40,9 @@ const getPosts = wrapAsync(async (req, res) => {
         as: "tags",
         attributes: ["name"],
         through: {
-          attributes: []
-        }
-      }
+          attributes: [],
+        },
+      },
     ],
     limit: 5,
     offset: (req.params.page - 1) * 5,
@@ -95,27 +97,29 @@ const deletePost = wrapAsync(async (req, res) => {
   if (!post) {
     throw makeError("데이터가 존재하지 않습니다.", 400);
   }
-  
-  await Post.destroy(req.params.id);
 
-  const el = document.createElement('html');
-  el.innerHTML =   post.content;
-  const imageEls = el.getElementsByTagName('img');
-  const images = 
-    Array.from(imageEls).filter(image => image.className !== "ProseMirror-separator").map(image => image.src);
-  const deleteObjects = images.map((image) => {
-    if (!image.includes(IMAGE_BASE_URL)) {
-      return;
-    }
-    const Key = image.substring(IMAGE_BASE_URL.length);
-    return { Key };
-  });
-  await deleteS3Images(deleteObjects);
+  await Post.destroy({ where: { id: req.params.id } });
+
+  const root = parse(post.content);
+  const imageEls = root.getElementsByTagName("img");
+  const images = Array.from(imageEls)
+    .filter((image) => image.getAttribute("class") !== "ProseMirror-separator")
+    .map((image) => image.getAttribute("src"));
+  const deleteObjects = images
+    .filter((image) => image.includes(BASE_IMAGE_URL))
+    .map((image) => {
+      const Key = image.substring(BASE_IMAGE_URL.length);
+      return { Key };
+    });
+  if (deleteObjects.length) {
+    await deleteS3Images(deleteObjects);
+  }
 
   return res.status(200).json({});
 });
 
-const postImage = (req, res) => res.status(200).json({ url: BASE_IMAGE_URL + req.file.key });
+const postImage = (req, res) =>
+  res.status(200).json({ url: BASE_IMAGE_URL + req.file.key });
 
 module.exports = {
   postPost,
