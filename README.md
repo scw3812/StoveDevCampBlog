@@ -1,6 +1,19 @@
 # StoveDevCampBlog
 ## 2021 Smilegate Stove Dev Camp 사전 과제 2 - 블로그 개발
 
+### 사용 기술 및 라이브러리
+- client
+  - React, JavaScript
+  - 주요 라이브러리: axios, react-router-dom, styled-components, @toast-ui/react-editor
+- server
+  - Node.js, Express.js, JavaScript
+  - DB: Mysql
+  - Cloud Storage: AWS S3
+  - 주요 라이브러리: multer, sequelize
+
+### 시스템 구성도
+![그림1](https://user-images.githubusercontent.com/49465188/140387652-97b5ed0e-e0de-4130-a2aa-c96d472b9add.png)
+
 ### 화면 스크린샷
 화면|메인 페이지|메인 페이지2
 -|-|-
