@@ -10,7 +10,7 @@ import {
   PostEdit,
   EditImg
 } from "./Post.style"
-import { Header } from "../../components";
+import { Footer, Header } from "../../components";
 import parser from "html-react-parser";
 import edit from "../../assets/img/edit.svg";
 
@@ -28,6 +28,7 @@ const PostPresenter = ({ post }) => {
         <PostContent>{parser(post.content)}</PostContent>
         <PostTags>Tags: {post.tags.map(tag => tag.name + " ")}</PostTags>
       </PostMain>
+      <Footer />
     </Container>
   )
 }

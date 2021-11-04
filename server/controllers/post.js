@@ -49,7 +49,7 @@ const getPosts = wrapAsync(async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  return res.status(201).json({ posts });
+  return res.status(200).json({ posts });
 });
 
 const getPost = wrapAsync(async (req, res) => {

@@ -34,7 +34,7 @@ const Editor = ({ location, history }) => {
       setDeleteImages(prev => [...prev, url]);
       callback(url, alt);
     } catch (err) {
-      alert(err.response ? err.response.data : err);
+      alert(err.response ? err.response.data.error : err.message);
     }
   }
   const handleTagChange = (tag) => setTag(tag);
@@ -72,7 +72,7 @@ const Editor = ({ location, history }) => {
       }
       history.push("/");
     } catch (err) {
-      alert(err.response ? err.response.data : err);
+      alert(err.response ? err.response.data.error : err.message);
     }
   }
 

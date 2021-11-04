@@ -5,7 +5,8 @@ const {
   getPost,
   patchPost,
   deletePost,
-  postImage
+  postImage,
+  getCount,
 } = require("../controllers/post");
 const { upload } = require("../utils/s3");
 
