@@ -116,7 +116,6 @@ const postImage = (req, res) =>
 const getPostsTags = wrapAsync(async (req, res) => {
   const posts = await Post.findAll({
     where: { user_id: req.params.userId },
-    attributes: ["id", "title", "description", "createdAt"],
     include: [
       {
         model: Tag,
@@ -124,6 +123,7 @@ const getPostsTags = wrapAsync(async (req, res) => {
         attributes: ["id", "name"]
       }
     ],
+    order: [["createdAt", "DESC"]],
   });
   const tags = posts.reduce((prev, post) => [...prev, ...post.tags.map((tag) => tag.name)], []);
   const newTags = Array.from(new Set(tags));
