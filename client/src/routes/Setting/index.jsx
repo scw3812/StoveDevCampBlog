@@ -6,10 +6,21 @@ const Setting = ({ location: { state } }) => {
   const [nickname, setNickname] = useState(state.nickname);
   const [profile, setProfile] = useState(state.profile);
   const [profileFile, setProfileFile] = useState(null);
+  const [profileBase64, setProfileBase64] = useState("");
 
   const handleChangeProfile = (e) => {
-    const img = e.target.files[0];
-    setProfileFile(img);
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      if (base64) {
+        setProfileBase64(base64.toString());
+      }
+    }
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+      setProfileFile(e.target.files[0]);
+    }
   }
   const handleChangeNickname = (nickname) => setNickname(nickname);
   const handleClickSubmit = async () => {
@@ -31,10 +42,11 @@ const Setting = ({ location: { state } }) => {
 
   return <SettingPresenter 
             nickname={nickname} 
-            profile={profile} 
+            profile={profile}
+            profileBase64={profileBase64}
             onChangeProfile={handleChangeProfile} 
             onChangeNickname={handleChangeNickname}
-            onClickSubmit={handleClickSubmit} 
+            onClickSubmit={handleClickSubmit}
           />
 }
 

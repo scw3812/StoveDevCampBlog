@@ -2,7 +2,7 @@ import { Container, SettingMain, Avatar, TitleInput, SubmitButton, FileInput } f
 import { Header, Footer } from "../../components";
 import avatar from "../../assets/img/avatar.png";
 
-const SettingPresenter = ({ nickname, profile, onChangeProfile, onChangeNickname, onClickSubmit }) => {
+const SettingPresenter = ({ nickname, profile, profileBase64, onChangeProfile, onChangeNickname, onClickSubmit }) => {
   return (
     <Container>
       <Header />
@@ -13,7 +13,7 @@ const SettingPresenter = ({ nickname, profile, onChangeProfile, onChangeNickname
           accept=".jpg, .png, .gif"
           onChange={onChangeProfile} />
         <label for="input-profile">
-          <Avatar alt="profile" src={profile ?? avatar} />
+          <Avatar alt="profile" src={profileBase64 === "" ? (profile ?? avatar) : profileBase64} />
         </label>
         <TitleInput value={nickname} onChange={({ target }) => onChangeNickname(target.value)} />
         <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>

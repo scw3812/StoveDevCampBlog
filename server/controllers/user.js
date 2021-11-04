@@ -20,7 +20,6 @@ const patchUserInfo = wrapAsync(async (req, res) => {
     throw makeError("데이터가 존재하지 않습니다.", 400);
   }
 
-  console.log(key)
   if (key && exUser.profile) {
     const Key = exUser.profile.substring(BASE_IMAGE_URL.length);
     await deleteS3Images([{ Key }]);
