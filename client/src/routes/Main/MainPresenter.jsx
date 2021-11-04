@@ -4,7 +4,7 @@ import { Container, MainContent, MainTitle, MainTitleLine, MainPosts, MainPrevBu
 const MainPresenter = ({ nickname, profile, posts, page, lastPage, onClickDelete, onClickNext, onClickPrev }) => {
   return (
     <Container>
-      <Header isMain profile={profile}/>
+      <Header nickname={nickname} profile={profile}/>
       <MainContent>
         <MainTitle>{nickname}'s Blog</MainTitle>
         <MainTitleLine />

@@ -9,7 +9,7 @@ const multiPartAPI = axios.create({
   baseURL: "http://localhost:8001",
   headers : {'Content-type' : 'multipart/form-data' },
   timeout: 3000
-})
+});
 
 const POST_BASE_URL = "/posts";
 export const postAPI = {

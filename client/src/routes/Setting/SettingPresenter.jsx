@@ -1,9 +1,26 @@
-const SettingPresenter = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+import { Container, SettingMain, Avatar, TitleInput, SubmitButton, FileInput } from "./Setting.style";
+import { Header, Footer } from "../../components";
+import avatar from "../../assets/img/avatar.png";
 
-export default SettingPresenter
+const SettingPresenter = ({ nickname, profile, onChangeProfile, onChangeNickname, onClickSubmit }) => {
+  return (
+    <Container>
+      <Header />
+      <SettingMain>
+        <FileInput 
+          id="input-profile"
+          type="file"
+          accept=".jpg, .png, .gif"
+          onChange={onChangeProfile} />
+        <label for="input-profile">
+          <Avatar alt="profile" src={profile ?? avatar} />
+        </label>
+        <TitleInput value={nickname} onChange={({ target }) => onChangeNickname(target.value)} />
+        <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>
+      </SettingMain>
+      <Footer />
+    </Container>
+  );
+};
+
+export default SettingPresenter;

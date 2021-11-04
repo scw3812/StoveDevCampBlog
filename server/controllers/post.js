@@ -1,10 +1,7 @@
 const { Post, Tag } = require("../models");
 const { wrapAsync, makeError } = require("../utils");
-const { deleteS3Images } = require("../utils/s3");
+const { deleteS3Images, BASE_IMAGE_URL } = require("../utils/s3");
 const { parse } = require("node-html-parser");
-
-const BASE_IMAGE_URL =
-  "https://stove-s3-bucket.s3.ap-northeast-2.amazonaws.com/";
 
 const postPost = wrapAsync(async (req, res) => {
   const { userId, tags, deleteImages, ...postDatas } = req.body;
